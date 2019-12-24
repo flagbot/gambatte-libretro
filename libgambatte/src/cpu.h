@@ -22,6 +22,7 @@
 #include "gambatte.h"
 #include "gambatte-memory.h"
 #include "savestate.h"
+#include "debugger/Debugger.h"
 
 namespace gambatte {
 
@@ -98,12 +99,16 @@ public:
 	void setGameShark(std::string const &codes) { mem_.setGameShark(codes); }
 
 	Memory mem_;
+    debugger::Debugger* debugger;
+    
+    unsigned short pc_;
+    unsigned short correct_pc;
+    unsigned short sp;
+    unsigned hf1, hf2, zf, cf;
+    unsigned char a_, b, c, d, e, /*f,*/ h, l;
+    unsigned long cycleCounter_;
+    
 private:
-	unsigned long cycleCounter_;
-	unsigned short pc_;
-	unsigned short sp;
-	unsigned hf1, hf2, zf, cf;
-	unsigned char a_, b, c, d, e, /*f,*/ h, l;
 	bool skip_;
 
 	void process(unsigned long cycles);

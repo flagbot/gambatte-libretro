@@ -20,6 +20,7 @@
 #define GAMBATTE_H
 
 #include "inputgetter.h"
+#include "debugger/Debugger.h"
 #ifdef HAVE_NETWORK
 #include "serial_io.h"
 #endif
@@ -141,6 +142,8 @@ public:
    void *zeropage_ptr() const;
    void *oamram_ptr() const;
 #endif
+    
+    debugger::Debugger* debugger;
 
 private:
 	struct Priv;

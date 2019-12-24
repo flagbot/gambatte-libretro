@@ -507,6 +507,9 @@ void CPU::process(unsigned long const cycles) {
 			}
 		} else while (cycleCounter < mem_.nextEventTime()) {
 			unsigned char opcode;
+            correct_pc = pc;
+            debugger->CheckForBreakpoints(pc);
+            debugger->WaitWhileHalted();
 
 			PC_READ(opcode);
 

@@ -36,7 +36,10 @@ struct GB::Priv {
    void full_init();
 };
 	
-GB::GB() : p_(new Priv) {}
+GB::GB() : p_(new Priv) {
+    debugger = new debugger::Debugger(&p_->cpu);
+    p_->cpu.debugger = debugger;
+}
 
 GB::~GB() {
 	delete p_;

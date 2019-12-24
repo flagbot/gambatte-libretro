@@ -6,6 +6,7 @@
 #include "gambatte.h"
 #include "gbcpalettes.h"
 #include "bootloader.h"
+#include "debugger/Debugger.h"
 #ifdef HAVE_NETWORK
 #include "net_serial.h"
 #endif
@@ -30,6 +31,10 @@
 extern "C" void* linearMemAlign(size_t size, size_t alignment);
 extern "C" void linearFree(void* mem);
 #endif
+
+#include "easylogging++.h"
+
+INITIALIZE_EASYLOGGINGPP
 
 retro_log_printf_t log_cb;
 static retro_video_refresh_t video_cb;
@@ -306,7 +311,8 @@ void retro_init(void)
 
    if (environ_cb(RETRO_ENVIRONMENT_GET_INPUT_BITMASKS, NULL))
       libretro_supports_bitmasks = true;
-
+    
+    gb.debugger->StartGdbStub();
 }
 
 void retro_deinit(void)
@@ -1007,7 +1013,7 @@ bool retro_load_game(const struct retro_game_info *info)
       {     rom, gb.rombank0_ptr(),  0, 0x0000,               0, 0, 0x4000,                        NULL },
       {     rom, gb.rombank1_ptr(),  0, 0x4000,               0, 0, 0x4000,                        NULL },
       {       0, gb.savedata_ptr(),  0, 0xA000, (size_t)~0x1FFF, 0, sramlen,                       NULL },
-      { mainram, gb.rambank2_ptr(),  0, 0x10000,     0xFFFF0000, 0, gb.isCgb() ? 0x6000 : 0,       NULL },
+       { mainram, gb.rambank2_ptr(),  0, 0x10000,     0xFFFF0000, 0, static_cast<size_t>(gb.isCgb() ? 0x6000 : 0),       NULL },
       {       0, gb.oamram_ptr(), 0x100, 0xFF00,     0xFFFFFF00, 0, 0x0080,                        NULL },
    };
    
