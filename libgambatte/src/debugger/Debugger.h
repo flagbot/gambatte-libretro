@@ -10,6 +10,7 @@
 #include <vector>
 #include <condition_variable>
 #include <mutex>
+#include <functional>
 
 namespace gambatte {
 
