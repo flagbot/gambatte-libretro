@@ -122,5 +122,5 @@ target_compile_options(gambatte_libretro PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-std=
 add_custom_command(TARGET gambatte_libretro POST_BUILD 
   COMMAND "${CMAKE_COMMAND}" -E copy 
      "$<TARGET_FILE:gambatte_libretro>"
-     "${PROJECT_SOURCE_DIR}/cores/$<TARGET_FILE_NAME:gambatte_libretro>" 
+     "${PROJECT_SOURCE_DIR}/cores/gambatte.core" 
   COMMENT "Copying to output directory")
